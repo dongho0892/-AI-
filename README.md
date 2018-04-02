@@ -1,3 +1,5 @@
+18.04.02
+
 GitHub - host platform / 남들과 함께하는
 
 repository - 저장소 / 싱글프로젝트 / 구상 정리하는  / 
