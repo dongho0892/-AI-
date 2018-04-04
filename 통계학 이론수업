@@ -142,7 +142,7 @@ https://zetawiki.com/wiki/%EB%AA%A8%EB%B6%84%EC%82%B0,_%ED%91%9C%EB%B3%B8%EB%B6%
 		   : 상호배반은 독립이랑 다르다. 독립은 서로의 사건에 영향을 주지 않는 것.
        		   : 상호배반은 하나가 발생하면 다른 하나가 발생하지 않게 영향을 줌
 
-	- 사건[E]->확률변수[X]->확률[P(X)]->확률변수[P(X=x)]
+	- 사건[E]->확률변수[X]->확률[P(X)]->확률함수[P(X=x)]
 
 	- 복원추출과 비복원추출
 	   : 뽑고나서 되돌리는 경우와, 뽑고나서 되돌려놓지 않는 경우의 확률
@@ -189,11 +189,11 @@ https://zetawiki.com/wiki/%EB%AA%A8%EB%B6%84%EC%82%B0,_%ED%91%9C%EB%B3%B8%EB%B6%
 				... 성공 p / 실패 1-p
 	 	- 의미 : 연속적인 베르누이 시행을 거쳐 나타나는 확률분포
 
-	 - 확률질량함수 : dbinom(x, size, prob)
-	 - 누적분포함수 : pbinom(q, size, prob, lower.tail = TRUE / FALSE)
-	 - 분위수 	: qbinom(p, size,  prob, lower.tail = TRUE / FALSE)
-	 - 난수 	: rbinom(n, size, prob)
-
+	 - 확률질량함수 : P ( X = x )			  dbinom(x, size, prob)
+	 - 누적분포함수 : P ( X <= x ) 		  pbinom(q, size, prob, lower.tail = TRUE / FALSE)
+	 - 분위수 : 특정 확률 값에 해당하는 분위수 계산	qbinom(p, size,  prob, lower.tail = TRUE / FALSE)
+	 - 난수 : 난수 발생				  rbinom(n, size, prob)
+			
 	 - 이항분포 예제
 
 	http://rfriend.tistory.com/99
