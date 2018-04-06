@@ -291,3 +291,7 @@ midwest$asiantest <- ifelse(midwest$perasian >= mean(midwest$perasian), "large",
 str(midwest)
 table(midwest$asiantest)
 qplot(midwest$asiantest)
+
+
+
+
