@@ -190,8 +190,104 @@ df_new <- rename(df_new, v2 = var2)   #변수할당을 해주어야 저장 됨.
 df_new
 df_raw
 
+#변수명 수정하기
+
 mpg <- as.data.frame(ggplot2::mpg)
 mpg1 <- mpg
 
 mpg1 <- rename(mpg1, city = cty, highway = hwy)
 View(mpg1)
+
+# 파생변수 만들기
+
+df <-  data.frame(var1 =c(4,3,8),
+                  var2 = c(2,6,1))
+df
+
+df$var_sum <-  df$var1 + df$var2
+
+df
+df$var_mean <- (df$var1 + df$var2)/2  #대소문자 구별 주의
+
+df
+
+mpg1$total <-(mpg1$city + mpg1$highway)/2
+
+mpg1
+head(mpg1)
+mean(mpg1$total)
+
+summary(mpg1$total) # mpg1 말고, mpg1$특정변수 를 구체적으로 입력할 것
+
+hist(mpg1$total)
+
+# 조건문 : ifelse (조건, T , F )
+
+mpg1$pandan <- ifelse(mpg1$total >= 20 ,"PASS", "FAIL")
+
+head(mpg1)
+
+table(mpg1$pandan)  # pandan 변수의 내용을 테이블형식으로 보여줌.
+
+library(ggplot2)      #ggplot2 패키지로 막대그래프 형성
+qplot(mpg1$pandan)
+
+mpg1$pandan1 <- ifelse(mpg1$total < 20 , "C", 
+                       ifelse(mpg1$total < 29, "B", "A"))
+head(mpg1, 20)
+qplot(mpg1$pandan1)
+table(mpg1$pandan1)
+
+mpg1$pandan2 <-  ifelse(mpg1$total < 15, "D",
+                        ifelse(mpg1$total < 20, "C",
+                               ifelse(mpg1$total <25, "B", "A")))
+
+head(mpg1,20)
+qplot(mpg1$pandan2)
+table(mpg1$pandan2)
+
+
+#정리하기
+
+mpg1 <- as.data.freme(ggplot2::mpg)
+library(dplyr)
+library(ggplot2)
+
+head(mpg1,20)
+tail(mpg1,10)
+View(mpg1)
+dim(mpg1)
+str(mpg1)
+summary(mpg1)
+
+mpg1 <- rename(mpg1, company = manufacturer)
+
+mpg1$total <- (mpg1$city + mpg1$highway)/2
+mpg1$test <- ifelse(mpg1$total >= 20,"Pass", "Fail")
+
+table (mpg1$test)
+qplot(mpg1$test)
+
+
+# 분석도전 123p
+
+library(ggplot2)
+midwest <- as.data.frame(ggplot2::midwest)
+
+head(midwest)
+str(midwest)
+
+library(dplyr)
+midwest <-  rename(midwest, asian = popasian, total = poptotal)
+str(midwest)
+
+midwest$perasian <- midwest$asian/midwest$total
+str(midwest)
+hist(midwest$perasian)
+mean(midwest$perasian)
+
+midwest$asiantest <- ifelse(midwest$perasian >= mean(midwest$perasian), "large", "small")
+
+str(midwest)
+table(midwest$asiantest)
+qplot(midwest$asiantest)
