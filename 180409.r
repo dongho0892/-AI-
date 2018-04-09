@@ -267,10 +267,13 @@ shapiro.test(res1)
 res1 = residuals(reg1)
 
 ####################################################
+
 library(readxl)
 library(ggplot2)
 library(descr)
+setwd("C:/dev/r_workspace/source")
 b <- read_excel("친절도_재구매2.xlsx")
+
 #엑셀파일을 불러온다.
 reg1=lm(b$재구매 ~ b$친절도 + b$사은품) 
 # 종속변수 : 재구매 / 독립변수 : 친절도, 사은
@@ -292,5 +295,31 @@ shapiro.test(res1)
 
 
 #  
-res1 = residuals(reg1)
-durbinWatsonTest(reg1)
+install.packages("lmtest")
+library(lmtest)
+install.packages("car")
+library(car)
+res1 = residuals(reg1)   # 잔차들의 값을 계산해줌.
+
+# 최소제곱법을 사용함.
+# 잔차의 평균이 0, 공분산 0, 잔차의 분산이 변하지 않음, 정규분포를 따름
+
+
+durbinWatsonTest(res1)   # 잔차가 독립되어 있는가?
+# 주식 자료 / 시계열분석 어제와 오늘의 나는 연결이 되어있다. -> 독립성여부 판단.
+# 귀무가설 : 잔차가 독립성을 가진다 / 대립가설 : 양의 상관관계를 가진다.
+# = > 2 근처면 독립, 1.4보다 작으면 양의 상관 / 보기 좋은 값은 아님 1.333 애매하다.  
+
+# 다중공선성 - 다중회귀분석에서 쓰임
+#           - 그 둘의 관계가 상관관계가 크므로, 두개 다 넣으면, 분산값이 커져서, 그 전에 그 둘의 다중공성성을 확인해야됨.
+
+?vif
+vif=vif(reg1)
+vif
+
+ # b$친절도 b$사은품 
+ # 1.115853 1.115853    => 10보다 작으면 다중공선성이 없다고 볼 수 있음. => 다중회귀에서 그대로 써도 된다. 
+ # / 10을 넘어가면 다른 값으로 바꿔 줘야함.
+
+
+ 
