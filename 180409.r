@@ -260,7 +260,6 @@ confint(reg1) # 신뢰구간 분석
 
 
 # 다중공선성 : 서로 상관관계가 높아서 분산값이 높아짐! -> 신뢰도가 떨어짐.
-
 par(mfrow=c(2,2))
 plot(reg1)
 shapiro.test(res1)
@@ -293,7 +292,6 @@ confint(reg1)
 
 shapiro.test(res1)
 
-
 #  
 install.packages("lmtest")
 library(lmtest)
@@ -322,4 +320,4 @@ vif
  # / 10을 넘어가면 다른 값으로 바꿔 줘야함.
 
 
- 
+durbinWatsonTest(res)  # 2.897175 = 독립이다.
