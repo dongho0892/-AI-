@@ -178,10 +178,119 @@ confint(reg)  # 베타0,1의 신뢰구간의 범위
 # 예제
 
 getwd()
-kind <-  read_excel("친절도_재구매.xlsx")        
-plot(kind$친절도 ~ kind$재구매, data=kind, type="p", pch=20, col="red", cex=2)
-reg <-lm(kind$친절도~kind$재구매)
+kind <- read_excel("친절도_재구매.xlsx")
+?plot
+       # 종속변수 ~ 독립변수
+plot(kind$재구매 ~ kind$친절도, data=kind, type="p", pch=20, col="red", cex=2)
+reg1 <-lm(kind$재구매~kind$친절도)
+abline(reg1, lwd=2, col="red")
 
-summary(reg)
- # Estimate Std           # t값. p값
-confint(reg)
+reg1 #  => 각 계수의 값 확인
+summary(reg1)
+# 잔차관련 : 잔차의 하한 ~ 상
+
+# b0, b1 이 유의한가? 표준오차 / t값 / p값(유의값) - b0 은 신뢰구간 밖에 위치
+# R스퀘어 : 설명해줄 수 있는 정도 30% 정도 설명해준다.
+# Estimate Std           # t값. p값
+confint(reg1)
+
+
+
+#잔차의 독립성 2 근처면 독립, 1.4보다 작으면 양의 상관
+?durbinWatsonTest
+library(car)
+
+res = residuals(reg)   # 잔차를 구해주는 함수
+
+par(mfrow=c(2,2))# 위 아래 각각 2개씩 나오도록
+plot(reg)
+par(mfrow=c(1,1))
+
+#정규성 - 
+?shapiro.test
+shapiro.test(res)
+
+#산점도와 회귀직선                진하게
+plot(ad$매출액~ad$광고비, cex=1, lwd=1 )
+abline(reg, lwd=2, col="red")
+?abline    # 선 긋기 / 
+
+
+
+kind <- read_excel("친절도_재구매.xlsx")
+?plot
+# 종속변수 ~ 독립변수
+plot(kind$재구매 ~ kind$친절도, data=kind, type="p", pch=20, col="red", cex=2)
+reg1 <-lm(kind$재구매~kind$친절도)
+res1 = residuals(reg1)   # 잔차를 구해주는 함수
+summary(reg1)
+summary(res1)
+
+shapiro.test(res1)
+plot(kind$재구매~kind$친절도, cex=1, lwd=1 )
+
+
+#  [ 최소제곱법을 사용해서 값이 유의한지 아닌지 확인해봤음 ]
+
+
+# 다중회귀분석
+# 독립변수의 갯수가 여러개 중 종속변수에 어떠한 영향을 미치는지 분석.
+# 적합도 검정 - 수정된 R^2
+# 분산분석
+
+# 추정된 회귀식에서 회귀계수 베타1추정치 검정
+
+# 귀무가설 : 베타0,1 = 0   - 의미가 없는 값이다.
+# 대립가설 : 베타0,1 = 0이 아니다.
+
+#추정된 회귀식의 유의성 검정   - t_통계량
+
+# 귀무가설 : 회귀식이 유의하지 않다.
+# 대립가설 : 회귀식이 유의하다.    
+
+phone <-read_excel("다중 회귀분석_요인저장_변수 계산.xls")
+#           종속변수 ~ 독립변 
+reg1=lm(phone$만족감 ~ phone$외관 + phone$유용성 + phone$편의성)
+reg1   
+summary(reg1)
+# p-값 - 다 유의함
+# 회귀식 판단 - 수정된 R값 - 22.9% 정도 설명해줌.
+#             - 분산분석을 통해 이 값이 유의한가? -> f값 => p값 기각역에 위치 => 유의하다.
+confint(reg1) # 신뢰구간 분석
+
+
+# 다중공선성 : 서로 상관관계가 높아서 분산값이 높아짐! -> 신뢰도가 떨어짐.
+
+par(mfrow=c(2,2))
+plot(reg1)
+shapiro.test(res1)
+res1 = residuals(reg1)
+
+####################################################
+library(readxl)
+library(ggplot2)
+library(descr)
+b <- read_excel("친절도_재구매2.xlsx")
+#엑셀파일을 불러온다.
+reg1=lm(b$재구매 ~ b$친절도 + b$사은품) 
+# 종속변수 : 재구매 / 독립변수 : 친절도, 사은
+?lm
+# lm 함수를 이용해서 선형모델로 만들어준 뒤, 각 독립변수의 계수를 표시해줌.
+reg1    # 회귀분석의 결과 : y절편, 친절도, 사은품
+summary(reg1)  # 잔차의 내용 / 각각의 값이 유의하            
+
+
+plot(reg1)     # normal Q-Q  
+par(mfrow=c(2,2)) 
+
+res1 = residuals(reg1)
+shapiro.test(res1)
+summary(res1)
+confint(reg1)
+
+shapiro.test(res1)
+
+
+#  
+res1 = residuals(reg1)
+durbinWatsonTest(reg1)
