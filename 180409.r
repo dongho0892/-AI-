@@ -127,4 +127,6 @@ xtabs  # 교차표를 만들어주기 위해서 씀
 
 purchasing.table <- xtabs(~구매의사+지역, data=purchasing)
 purchasing.table
-chisq.test(purchasing.table)
+chisq.test(purchasing.table) # 자유도 (2-1)(2-1) = 1
+# 귀무가설 : 구매의사와 지역간에 서로 독립적이다  => 기각 : 서로 연관이 있다. 대립가설 채택
+
