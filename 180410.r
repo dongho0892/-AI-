@@ -319,4 +319,8 @@ characters[characters$gender == "M" & characters$age < 30, ]
    print(paste(dan,"X",i," = ",times))
  }
 
-      
+    str(Puromycin)
+PuroTrt <- subset(Puromycin, state=="treated")   # treated 처리 된 것과
+PuroUnTrt <- subset(Puromycin,state=="untreated")  # 처리되지 않은 자료를 만들어줌
+
+plot(rate ~ conc, data=PuroTrt)
