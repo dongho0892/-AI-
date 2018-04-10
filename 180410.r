@@ -260,6 +260,63 @@ name <- c("철수", "영미","남혁")
 age <- c(21,20,27)
 gender <- factor(c("M","F","M"))
 characters <- data.frame(name, age,gender) # 조건에 맞는 행을 찾을 때 주로 씀
-characters[characters$gender == "F",]
+characters[characters$gender == "F",]  # 여자인 경우만 불러옴
 characters[characters$gender == "F" & characters$age < 30, ]
 characters[characters$gender == "M" & characters$age < 30, ]
+ 
+ # 조건문 함수 : ifelse()
+ 
+ x <- c(6:-4)
+ options(digits=3) # 출력물을 세자리로 설정
+ sqrt(x)  # 경고메시지 출력 : NaN 숫자로 된게 아니어서 
+ options(digits=3)
+ sqrt(ifelse(x >= 0, x, NA)) # x가 0 이상일 때만 x값 출력
+
+ # 조건문 : if
+ 
+ x <- c(1,2,3)
+ x <- factor(x) # 숫자로 구성된 벡터 x를 factor(요소)로 재구성   
+ x
+ if(is.factor(x)) length(x)  # 길이를 반환
+ if(is.factor(x)) {
+   length(x)  # 참이면 길이 출력
+ } else { 
+   sum(x)     # 거짓이며 더한다.
+ }
+  
+ if(is.factor(x)) {
+   length(x)
+ } else {
+   paste(x,"element")
+ }
+
+ # 반복문 repeat
+ i <- 20
+ repeat {        # 안의 내용 반복
+   if (i > 25) { # i가 25보다 크면 break 정지함
+     break      
+   } else {      # 중지되지 않는다면
+     print(i)
+     i <- i + 1
+   }
+ }
+
+  # while 반복문
+ 
+ dan <- 2
+ i <- 2
+  while (i < 10){
+  times <- i * dan
+   print(paste(dan,"X",i," = ", times))
+  i <- i+1
+  }
+  # 무한루프 주의 아래 빨간 점 클릭 할 것
+
+# for 문
+ dan <- 9
+ for (i in 2:9) { # i 2~9사이 값을 주기
+   times <- i *dan
+   print(paste(dan,"X",i," = ",times))
+ }
+
+      
