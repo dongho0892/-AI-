@@ -142,3 +142,124 @@ factor(x, levels=c(1,2,3,4))  # 1,2,3,4만 뽑겠다.
 factor(x, levels=c(1,2,3,4), exclude=c(1,2))   # 1,2는 제외하겠다.
 factor(x, levels=c(1,2,3,4), exclude=c(1,2), ordered=TRUE)  # ordered : 순서를 지정해준다.
 
+# ?is.factor / ?as.factor
+v <- c(1,2,3,4)
+x <- factor(x) #요인으로 생성
+is.factor(x)
+is.factor(v)
+v
+as.factor(v) # 요인으로 변환
+s <- as.factor(v)
+is.factor(as.factor(v))
+is.factor(s)
+
+# ?tapply   - Ragged Array
+score <-  c(92,90,82,88,78,64,82,90)
+subject <- c("k","k","m","m","m","m","k","k")
+tapply(score, subject, mean) # 각 요소를 묶어서 평균내줌.
+
+
+# 데이터 프레임 . data.frame
+ name <-c("철수","영희","남혁")
+ age <- c(21,20,31)
+ gender <- factor(c("M","F","M"))
+ character <-  data.frame(name, age, gender)
+ character
+ character$name  # $이름 속성 나열
+ character[1,]   # 첫번째 행 지정 / 열 전체
+ character[,2]   # 두번째 열 / 행 전체
+ character[3,1]  # 세번째 행, 첫번째 열이 겹치는 곳
+ character[2,2]  
+ character[1,1]  
+
+ # ?attach - 데이터 프레임의 열이름을 변수명으로 쓸 수 있게끔 설정해줌
+ # ?detach -  
+ 
+ head(airquality) # 오존, 바람 온도 등등..
+ Ozone   # 현재는 자료를 불러올 수 없음
+ attach(airquality) 
+ Ozone  
+ Ozone[1:5]
+ Ozone <- c(1,2,3)
+ attach (airquality)  # 기존에 attach 되어있어서 할 수 없음
+ Ozone 
+ Month[1:5]   # 표 안의 값이 5 이기 때문에.
+ detach(airquality) 
+ 
+ 
+ 
+ #with
+ head(cars)
+ mean(cars$speed) 
+ mean(cars$dist) 
+ with(cars,mean(speed))  #
+ with(cars, mean(dist))  # 데이터프레임 안에 있는 자료의 평균을 구할 수 있음.
+
+ #subset # 조건에 맞는 부분집합을 추출하기
+ ?subset
+ airquality
+ subset(airquality, Temp > 80) 
+ subset(airquality, Temp > 80, select=c(Ozone,Temp))  # 
+ subset(airquality, Temp > 80, select=-c(Ozone,Temp)) # - 관련된 것만 빼주고 
+ 
+ #NA는 값이 기록되지 않았거나 관측되지 않은 경우 데이터에 저장되는 값으로 ‘결측치’라고 부른다
+ # ?na.omit : object에 NA가 포함되어 있으면 이를 제외한다.
+ str(airquality)
+ str(na.omit(airquality))
+ 
+ #
+title <- "My List"
+ages <- c(31,41,21) 
+numbers <- matrix(1:9, nrow=3) 
+names <- c("Baby", "Gentle", "none")
+
+listEx <- list(title, ages, numbers, names)  # 순서대로 뿌려
+listEx
+listEx[1]  # 첫번째 요소만 가지고 옴
+
+#
+listEx2 <- list(title=title, age=ages, number=numbers, name=names)
+listEx2
+listEx2[1]
+listEx2$title
+listEx2$age
+listEx2$name
+listEx2$number
+
+# is.list : 리스트 인지 판단 / as.list : 리스트로 변환해줌
+
+x <- list(c(1,2,3,4), c(3,2,1))
+v <- c(1,2,3,4)  # vector
+x
+v
+is.list(x)
+is.list(v)
+a.l <- as.list(v)
+a.l
+is.list(a.l)
+
+# 리스트에 함수 적용하기
+
+# lapply 리스트의 각 요소에 평균을 구하고 결과를 리스트로 반환
+# sapply 리스트의 각 요소에 평균을 구하고 결과를 벡터로 반환
+
+x <- list(a=1:10, beta = exp(-3:3), logic = c(TRUE, FALSE,FALSE,TRUE))
+x # a, beta, logic 3개 리스트로 결과값 나옴
+lapply(x,mean) # 리스트 별로 결과값 보여줌
+sapply(x,mean) # 하나의 벡터로 결과값 보여줌
+
+# 자료 내 특정 원소 가져오기 / 조건 : []를 씀!
+ex <- c(1,3,7,NA,12)
+ex[ex < 10]
+ex[ex %% 2 == 0]
+ex[!is.na(ex)]
+ex[is.na(ex)]   # NA  인 것만 추출
+ex[ex %% 2 == 0 & !is.na(ex)] # 짝수이며, NA가 아닌 원소 추
+
+name <- c("철수", "영미","남혁")
+age <- c(21,20,27)
+gender <- factor(c("M","F","M"))
+characters <- data.frame(name, age,gender) # 조건에 맞는 행을 찾을 때 주로 씀
+characters[characters$gender == "F",]
+characters[characters$gender == "F" & characters$age < 30, ]
+characters[characters$gender == "M" & characters$age < 30, ]
