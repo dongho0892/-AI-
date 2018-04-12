@@ -153,15 +153,15 @@ monteCarloPoints(Frontier, mcSteps = 1000, cex = 0.25, pch=19)
 grid()
 
 
-library(timeSeries)
 
+
+library(timeSeries)
 library(Quandl)
 IT <- Quandl('DAROCZI/IT', start_Date = '2014-04-01', end_date='2016-02-19')
-
-
-
+IT <- timeSeries(IT[,2:6],IT[,1])
 assets <- IT[,-1]
 return <- log(tail(assets,-1) / head(assets, -1))
+IT_return <- returns(IT)
 
 n <- 6   ; mu <- 0.005
 Q <- cbind(cov(return, use="complete.obs"),rep(0,n-1))
@@ -182,3 +182,19 @@ w/sum(w)
 
 
 
+library(timeSeries)
+library(Quandl)
+IT <- Quandl('DAROCZI/IT', start_Date = '2014-04-01', end_date='2016-02-19')
+IT <- timeSeries(IT[,2:6],IT[,1])
+assets <- IT[,-1]
+return <- log(tail(assets,-1) / head(assets, -1))
+IT_return <- returns(IT)
+
+library(fPortfolio)
+Spec <- portfolioSpec()
+setSolver(Spec) <- "solveRshortExact"
+setTargetReturn(Spec) <- mean(colMeans(IT_return))
+efficientPortfolio(IT_return, Spec, 'Short')                               
+minvariancePortfolio(IT_return, Spec, 'short')
+minriskPortfolio(IT_return, Spec)
+maxreturnPortfolio(IT_return, Spec)
